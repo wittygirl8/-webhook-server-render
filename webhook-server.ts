@@ -33,7 +33,7 @@ const verifyWebhookSignature = (req: Request, res: Response, next: Function) => 
     next();
 };
 
-app.post('/api/webhook', verifyWebhookSignature, (req: Request, res: Response) => {
+app.post('/api/webhook', (req: Request, res: Response) => {
     try {
         console.log('Webhook received:', req.body);
 
