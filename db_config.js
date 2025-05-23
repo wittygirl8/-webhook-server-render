@@ -1,6 +1,6 @@
 import pkg from 'pg';
 import dotenv from 'dotenv';
-import { emitSessionStatus } from './socketUtil';
+import { emitSessionStatus } from './socketUtil.js';
 const { Pool, Client } = require('pkg');
 
 dotenv.config();
