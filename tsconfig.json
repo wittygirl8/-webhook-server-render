@@ -10,8 +10,7 @@
       "forceConsistentCasingInFileNames": true
     },
     "include": [
-      "*.ts"
-, "webhook-server.js"    ],
+      "*.ts"   ],
     "exclude": [
       "node_modules"
     ]
