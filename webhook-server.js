@@ -1,9 +1,9 @@
-import express from 'express';
-import { Request, Response } from 'express';
-import bodyParser from 'body-parser';
-import crypto from 'crypto';
-import dotenv from 'dotenv';
-import { insertTable } from './db_utils';
+const express = require('express');
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const dotenv = require('dotenv');
+const { insertTable } = require('./db_utils');
+
 dotenv.config();
 
 const app = express();
@@ -17,7 +17,7 @@ const verifyWebhookSignature = (req, res, next) => {
 
     if (!signature) {
         console.warn('No webhook signature provided');
-        return next();
+        return next(); // proceed without rejecting
     }
 
     const hmac = crypto.createHmac('sha256', SECRET_KEY);
@@ -31,7 +31,7 @@ const verifyWebhookSignature = (req, res, next) => {
     next();
 };
 
-app.post('/api/webhook', verifyWebhookSignature, (req, res) => {
+app.post('/api/webhook', verifyWebhookSignature, async (req, res) => {
     try {
         console.log('Webhook received:', req.body);
 
@@ -46,8 +46,9 @@ app.post('/api/webhook', verifyWebhookSignature, (req, res) => {
                 break;
             default:
                 console.log(`Received unhandled event type: ${webhookData.event}`);
-//                 console.dir(webhookData.event, { depth: null });
-                insertTable('webhook_response', { response: JSON.stringify(webhookData.event, null, 2) });
+                await insertTable('webhook_response', {
+                    response: JSON.stringify(webhookData.event, null, 2),
+                });
         }
 
         res.status(200).json({
