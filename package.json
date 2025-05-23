@@ -2,8 +2,7 @@
   "name": "webhook-server",
   "version": "1.0.0",
   "description": "A webhook receiver server built in JavaScript",
-  "main": "webhook-server.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "node webhook-server.js"
   },

@@ -10,7 +10,7 @@
       "forceConsistentCasingInFileNames": true
     },
     "include": [
-      "*.ts"   ],
+      "*.ts", "db_config.js", "db_utils.js"   ],
     "exclude": [
       "node_modules"
     ]
