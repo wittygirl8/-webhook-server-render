@@ -1,9 +1,6 @@
 import pool from './db_config';
 
-export async function insertTable(
-  tableName: string,
-  data: Record<string, any>
-): Promise<any[] | null> {
+export async function insertTable(tableName, data) {
   if (!tableName || typeof data !== 'object' || Object.keys(data).length === 0) {
     throw new Error('Invalid table name or data');
   }

@@ -1,23 +1,16 @@
 import pkg from 'pg';
 import dotenv from 'dotenv';
 import { emitSessionStatus } from './socketUtil';
+const { Pool, Client } = require('pkg');
 
 dotenv.config();
 
-const { Pool, Client } = pkg;
-
-interface SessionStatusPayload {
-  session_id: string;
-  status: string;
-  [key: string]: any; // Adjust based on your actual payload
-}
-
 // --- Database configuration ---
 const config = {
-  user: process.env.DB_USER as string,
-  host: process.env.DB_HOST as string,
-  database: process.env.DB_NAME as string,
-  password: process.env.DB_PASSWORD as string,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
   ssl: { rejectUnauthorized: false },
 };
@@ -30,14 +23,14 @@ pool.on('connect', () => {
   console.log('Connection pool established with the database');
 });
 
-pool.on('error', (err: Error) => {
+pool.on('error', (err) => {
   console.error('Connection pool error:', err);
 });
 
 // --- Create a dedicated client for LISTEN/NOTIFY ---
 const listenerClient = new Client(config);
 
-async function setupListener(): Promise<void> {
+async function setupListener() {
   try {
     await listenerClient.connect();
     console.log('Listener client connected to database');
@@ -46,14 +39,14 @@ async function setupListener(): Promise<void> {
 
     listenerClient.on('notification', (msg) => {
       try {
-        const payload = JSON.parse(msg.payload ?? '{}') as SessionStatusPayload;
+        const payload = JSON.parse(msg.payload ?? '{}');
         emitSessionStatus(payload);
       } catch (err) {
         console.error('Failed to parse payload:', err);
       }
     });
 
-    listenerClient.on('error', (err: Error) => {
+    listenerClient.on('error', (err) => {
       console.error('Listener client error:', err);
     });
   } catch (err) {
@@ -65,4 +58,4 @@ async function setupListener(): Promise<void> {
 setupListener();
 
 // Export pool for use in queries
-export default pool;
+module.exports = pool;
