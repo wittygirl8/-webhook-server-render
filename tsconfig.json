@@ -11,7 +11,7 @@
     },
     "include": [
       "*.ts"
-    ],
+, "webhook-server.js"    ],
     "exclude": [
       "node_modules"
     ]

@@ -12,8 +12,8 @@ const SECRET_KEY = process.env.WEBHOOK_SECRET || 'your-secret-key';
 
 app.use(bodyParser.json());
 
-const verifyWebhookSignature = (req: Request, res: Response, next: Function) => {
-    const signature = req.headers['x-webhook-signature'] as string;
+const verifyWebhookSignature = (req, res, next) => {
+    const signature = req.headers['x-webhook-signature'];
 
     if (!signature) {
         // You can choose to reject requests without signatures or process them anyway
@@ -33,7 +33,7 @@ const verifyWebhookSignature = (req: Request, res: Response, next: Function) => 
     next();
 };
 
-app.post('/api/webhook', verifyWebhookSignature,(req: Request, res: Response) => {
+app.post('/api/webhook', verifyWebhookSignature,(req, res) => {
     try {
         console.log('Webhook received:', req.body);
 
@@ -63,7 +63,7 @@ app.post('/api/webhook', verifyWebhookSignature,(req: Request, res: Response) =>
     }
 });
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok' });
 });
 
