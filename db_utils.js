@@ -1,4 +1,4 @@
-import pool from './db_config';
+import pool from './db_config.js';
 
 export async function insertTable(tableName, data) {
   if (!tableName || typeof data !== 'object' || Object.keys(data).length === 0) {
