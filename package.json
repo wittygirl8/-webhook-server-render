@@ -1,28 +1,17 @@
 {
-    "name": "typescript-webhook-server",
-    "version": "1.0.0",
-    "description": "A webhook receiver server built in TypeScript",
-    "main": "dist/webhook-server.js",
-    "scripts": {
-      "build": "tsc",
-      "start": "node dist/webhook-server.js",
-      "dev": "ts-node webhook-server.ts",
-      "test": "jest"
-    },
-    "dependencies": {
-      "body-parser": "^1.20.2",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "pg": "^8.16.0",
-      "socket.io": "^4.8.1"
-    },
-    "devDependencies": {
-      "@types/express": "^4.17.21",
-      "@types/node": "^20.10.5",
-      "@types/pg": "^8.15.2",
-      "@types/socket.io": "^3.0.2",
-      "ts-node": "^10.9.2",
-      "typescript": "^5.3.3"
-    }
+  "name": "webhook-server",
+  "version": "1.0.0",
+  "description": "A webhook receiver server built in JavaScript",
+  "main": "webhook-server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node webhook-server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.16.0",
+    "socket.io": "^4.8.1"
   }
-  
+}

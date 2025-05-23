@@ -4,7 +4,7 @@ FROM node:18-alpine
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy package files first (leverages Docker layer caching)
+# Copy package files
 COPY package*.json ./
 
 # Install dependencies
@@ -13,11 +13,8 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-# Build the TypeScript project
-RUN npm run build
-
-# Expose the port your app runs on (default: 3000)
+# Expose the port your app runs on (change if needed)
 EXPOSE 3000
 
-# Run the compiled app
-CMD ["node", "dist/webhook-server.js"]
+# Run the app directly (no TypeScript build step)
+CMD ["node", "webhook-server.js"]
