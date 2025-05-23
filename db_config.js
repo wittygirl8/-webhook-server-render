@@ -58,4 +58,4 @@ async function setupListener() {
 setupListener();
 
 // Export pool for use in queries
-module.exports = pool;
+export default pool;
