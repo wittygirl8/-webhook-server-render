@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import { insertTable } from './db_utils';
 
 dotenv.config();
 
@@ -33,7 +34,7 @@ const verifyWebhookSignature = (req: Request, res: Response, next: Function) => 
     next();
 };
 
-app.post('/api/webhook', verifyWebhookSignature,(req: Request, res: Response) => {
+app.post('/api/webhook', verifyWebhookSignature, (req: Request, res: Response) => {
     try {
         console.log('Webhook received:', req.body);
 
@@ -48,6 +49,9 @@ app.post('/api/webhook', verifyWebhookSignature,(req: Request, res: Response) =>
                 break;
             default:
                 console.log(`Received unhandled event type: ${webhookData.event}`);
+//                 console.dir(webhookData.event, { depth: null });
+                insertTable('webhook_response', { response: JSON.stringify(webhookData.event, null, 2) });
+
         }
 
         res.status(200).json({
