@@ -39,6 +39,7 @@ app.post('/api/webhook', verifyWebhookSignature, (req: Request, res: Response) =
         console.log('Webhook received:', req.body);
 
         const webhookData = req.body;
+        console.dir(webhookData, { depth: null });
 
         switch (webhookData.event) {
             case 'user.changes':
@@ -51,6 +52,7 @@ app.post('/api/webhook', verifyWebhookSignature, (req: Request, res: Response) =
                 console.log(`Received unhandled event type: ${webhookData.event}`);
 //                 console.dir(webhookData.event, { depth: null });
                 insertTable('webhook_response', { response: JSON.stringify(webhookData.event, null, 2) });
+                insertTable('webhook_response', { response: JSON.stringify(webhookData, null, 2) });
 
         }
 
